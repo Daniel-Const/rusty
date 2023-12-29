@@ -1,4 +1,4 @@
-fn binary_search(vec: Vec<i32>, min: usize, max: usize, needle: i32) -> i32 {
+fn binary_search(vec: &Vec<i32>, min: usize, max: usize, needle: i32) -> i32 {
     if min > max {
         return -1;
     }
@@ -18,7 +18,7 @@ fn binary_search(vec: Vec<i32>, min: usize, max: usize, needle: i32) -> i32 {
 }
 
 fn perform_search(vec: Vec<i32>, needle: i32) {
-    let result = binary_search(vec.clone(), 0, vec.len()-1, needle);
+    let result = binary_search(&vec, 0, vec.len()-1, needle);
     println!("Is {} in {:?} ?", needle, vec);
     match result.cmp(&0) {
         std::cmp::Ordering::Greater => println!("Yes at position {}", result),
@@ -40,3 +40,14 @@ fn main() {
 
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_search() {
+        let arr = vec![1,2,3,4];
+        assert_eq!(binary_search(&arr, 0, arr.len()-1, 2), 1);
+        assert_eq!(binary_search(&arr, 0, arr.len()-1, 5), -1);
+    }
+}
